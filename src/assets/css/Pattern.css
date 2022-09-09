@@ -35,6 +35,10 @@ button {
   
 }
 
+.ninja {
+    display: none;
+}
+
 .position {
     width: 100px;
     height: 100px;
