@@ -29,6 +29,7 @@ function App(props) {
 
     const [position, setPosition] = useState(() => {return {pattern: [true,true,true,true,true,true,true,true], safe:[0,1,2,3,4,5,6,7]}})
     const [showButton, setShowButton] = useState(true);
+    const [clickableIcons, setclickableIcons] = useState(false);
 
     const randomPattern = () => {
         let randNum = Math.floor(Math.random()*patternList.length)
@@ -55,8 +56,8 @@ function App(props) {
 
     return (
         <div id="home">
-            { showButton ? <button onClick={() => {random(); setShowButton(false)}}>Start</button> : <p></p>}
-            <Pattern2 positions={position.pattern} safeSpots={position.safe} random={random} />
+            { showButton ? <button onClick={() => {random(); setShowButton(false); setclickableIcons(true)}}>Start</button> : <p></p>}
+            <Pattern2 positions={position.pattern} safeSpots={position.safe} clickableIcons={clickableIcons} random={random} />
         </div>
     )
 }
