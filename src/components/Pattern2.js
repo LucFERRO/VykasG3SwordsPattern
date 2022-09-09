@@ -1,18 +1,23 @@
 import React from 'react'
 import Vykas from '../assets/img/VykasPortrait.png'
 import Mine from '../assets/img/Mine.jpg'
+import { click } from '@testing-library/user-event/dist/click'
 
 export default function Pattern2({clickableIcons,positions,random,safeSpots}) {
 
     let vykas = 'url("https://images-ext-1.discordapp.net/external/R9PKrKA0hCp8dOVoDD_bX1Z1WOmsxkBG2KSd3N9T8ww/%3Fcb%3D20220216075400/https/static.wikia.nocookie.net/lostark_gamepedia/images/4/4d/Vykas_Card_Portrait.png/revision/latest/top-crop/width/360/height/360")'
     let placement = '50% 35%'
-
-    console.log(clickableIcons)
+    let onlyOneSafeSpot = !(safeSpots.length-1)
 
     const clickSafeSpot = (e) => {
-        e.preventDefault()
+        let clickedSpot = parseInt(getComputedStyle(e.target).getPropertyValue('--i'))
+
+        let message = safeSpots.includes(clickedSpot) ? 'SUCCESS!' : `YOU DIED : You clicked ${clickedSpot} but the safe spot was ${onlyOneSafeSpot ? safeSpots : 'at '+safeSpots[0]+' or '+safeSpots[1]}`
+        // if (safeSpots.includes(clickedSpot)) console.log('GOT EEEEM')
+
+        console.log(message)
+
         random()
-        // console.log(getComputedStyle(e.target).getPropertyValue('--i'))
     }
 
     return (
