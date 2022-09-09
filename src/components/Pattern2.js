@@ -11,13 +11,14 @@ export default function Pattern2({clickableIcons,positions,random,safeSpots}) {
 
     const clickSafeSpot = (e) => {
         let clickedSpot = parseInt(getComputedStyle(e.target).getPropertyValue('--i'))
+        let guess = safeSpots.includes(clickedSpot)
 
-        let message = safeSpots.includes(clickedSpot) ? 'SUCCESS!' : `YOU DIED : You clicked ${clickedSpot} but the safe spot was ${onlyOneSafeSpot ? safeSpots : 'at '+safeSpots[0]+' or '+safeSpots[1]}`
+        let message =  guess ? 'SUCCESS!' : `YOU DIED : You clicked ${clickedSpot} but the safe spot was ${onlyOneSafeSpot ? safeSpots : 'at '+safeSpots[0]+' or '+safeSpots[1]}`
         // if (safeSpots.includes(clickedSpot)) console.log('GOT EEEEM')
-
+        
         console.log(message)
+        random(guess)
 
-        random()
     }
 
     return (

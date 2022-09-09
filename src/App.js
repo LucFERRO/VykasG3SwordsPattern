@@ -17,19 +17,23 @@ function App(props) {
     ]
 
     const patternListObj = [
-        {pattern: [false,true,false,true,true,true,false,true], safe: [5] },
+        {pattern: [false,true,false,true,true,true,false,true], safe: [4] },
         {pattern: [true,false,true,false,true,false,true,true], safe: [7] },
         {pattern: [true,true,false,true,false,true,false,true], safe: [0] },
-        {pattern: [false,false,true,false,true,true,true,true], safe: [6] },
-        {pattern: [true,false,false,true,true,false,true,true], safe: [7] },
-        {pattern: [false,true,true,true,true,false,false,true], safe: [4] },
-        {pattern: [true,true,false,true,true,false,false,true], safe: [4] },
+        {pattern: [false,false,true,false,true,true,true,true], safe: [5] },
+        {pattern: [true,false,false,true,true,false,true,true], safe: [6] },
+        {pattern: [false,true,true,true,true,false,false,true], safe: [3] },
+        {pattern: [true,true,false,true,true,false,false,true], safe: [3] },
         {pattern: [false,true,true,false,true,false,true,true], safe: [1,2] }
     ]
 
     const [position, setPosition] = useState(() => {return {pattern: [true,true,true,true,true,true,true,true], safe:[0,1,2,3,4,5,6,7]}})
     const [showButton, setShowButton] = useState(true);
     const [clickableIcons, setclickableIcons] = useState(false);
+    const [totalTries, setTotalTries] = useState(() => {return 0})
+    const [successfulTries, setsuccessfulTries] = useState(() => {return 0})
+
+    let accuracy = Math.floor(((successfulTries+1) / totalTries)*100)
 
     const randomPattern = () => {
         let randNum = Math.floor(Math.random()*patternList.length)
@@ -50,13 +54,16 @@ function App(props) {
         return {pattern: newPattern, safe: safeSpots}
     }
 
-    const random = () => {
+    const random = (guess) => {
         setPosition(randomPatternObj())
+        if (guess) setsuccessfulTries(successfulTries+1)
+        setTotalTries(totalTries+1)
+        console.log(`Total number of tries: ${totalTries}`)
     }
 
     return (
         <div id="home">
-            { showButton ? <button onClick={() => {random(); setShowButton(false); setclickableIcons(true)}}>Start</button> : <p></p>}
+            { showButton ? <button onClick={() => {random(false); setShowButton(false); setclickableIcons(true)}}>Start</button> : <p className='accuracy'>Accuracy: {accuracy}%</p>}
             <Pattern2 positions={position.pattern} safeSpots={position.safe} clickableIcons={clickableIcons} random={random} />
         </div>
     )
